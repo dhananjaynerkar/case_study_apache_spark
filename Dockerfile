@@ -17,6 +17,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY notebooks/ notebooks/
 COPY docs/ docs/
-COPY outputs/model_metrics.json outputs/model_metrics.json
+COPY data/ data/
+COPY outputs/ outputs/
+COPY k8s/ k8s/
+COPY README.md Dockerfile ./
 
 CMD ["python", "src/run_notebook.py"]

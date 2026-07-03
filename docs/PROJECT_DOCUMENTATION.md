@@ -521,6 +521,60 @@ To keep the notebook executable without installing Hadoop binaries:
 - Sample predictions were saved as `outputs/sample_predictions.csv`.
 - The trained Spark model was kept in memory during the notebook run.
 
+### Challenge 6: Kubernetes could not mount the local Windows data folder
+
+Docker Desktop Kubernetes did not recognize the attempted Windows hostPath mount for the local `data/` folder.
+
+Error symptom:
+
+```text
+hostPath type check failed: .../case_study/data is not a directory
+```
+
+Solution:
+
+For the local Kubernetes demonstration, the Docker image was built with the local ignored CSV files copied into `/app/data`. The CSV files remain ignored by Git, so they are not uploaded to GitHub.
+
+### Challenge 7: Kubernetes reused an older cached `latest` image
+
+The pod initially failed with:
+
+```text
+FileNotFoundError: data/ folder not found
+```
+
+The rebuilt local image contained `/app/data`, but Kubernetes was still using an older cached image for the `latest` tag.
+
+Solution:
+
+The Kubernetes deployment was changed to use a fresh local tag:
+
+```text
+smart-education-analytics:k8s-final-v2
+```
+
+This forced Docker Desktop Kubernetes to use the corrected image.
+
+### Challenge 8: Running the full Spark notebook during pod startup was too heavy
+
+The first Kubernetes command ran:
+
+```text
+python src/run_notebook.py && python -m http.server 8080 --directory outputs
+```
+
+This made the pod spend a long time running Spark before the HTTP service became useful.
+
+Solution:
+
+The Kubernetes command was changed to:
+
+```text
+python src/health_check.py && python -m http.server 8080 --directory outputs
+```
+
+This is a better deployment flow because notebook execution is already validated separately, while Kubernetes checks the packaged project and serves the generated output artifacts.
+
 ## How to Run
 
 Use the Python 3.10 environment:
@@ -558,14 +612,15 @@ The case-study PDF also asks for version control, Docker, Kubernetes, CI/CD, scr
 | Project health check script | Created | `src/health_check.py` |
 | Screenshot folders | Created | `screenshots/` |
 
-Items that require external action:
+Final submission status:
 
-| Requirement | What is still needed |
+| Requirement | Current status |
 |---|---|
-| GitHub repository link | Create or provide the GitHub repository URL, then upload/push this project. |
-| Docker execution screenshot | Build and run Docker locally, then add screenshots under `screenshots/docker/`. |
-| Kubernetes execution screenshot | Deploy with Minikube/Kubernetes/OpenShift, then add screenshots under `screenshots/kubernetes/`. |
-| CI/CD screenshot | Push to GitHub and capture a successful workflow run under `screenshots/github_actions/`. |
+| GitHub repository | Project pushed to GitHub. |
+| Docker execution | Docker image build and run validated locally. |
+| Kubernetes execution | Docker Desktop Kubernetes deployment validated locally. |
+| CI/CD | GitHub Actions workflow validated on push. |
+| Screenshots | Keep screenshots in `screenshots/docker/`, `screenshots/kubernetes/`, and `screenshots/github_actions/` if required by the evaluator. |
 
 Docker commands:
 
@@ -577,6 +632,7 @@ docker run --rm -v ${PWD}\outputs:/app/outputs smart-education-analytics:latest
 Kubernetes commands:
 
 ```powershell
+docker build -t smart-education-analytics:latest -t smart-education-analytics:k8s-final-v2 .
 kubectl apply -f k8s\deployment.yaml
 kubectl apply -f k8s\service.yaml
 kubectl get pods

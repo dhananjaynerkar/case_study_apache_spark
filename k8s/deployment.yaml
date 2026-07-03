@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
         - name: smart-education-analytics
-          image: smart-education-analytics:latest
+          image: smart-education-analytics:k8s-final-v2
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh", "-c"]
           args:
-            - python src/run_notebook.py && python -m http.server 8080 --directory outputs
+            - python src/health_check.py && python -m http.server 8080 --directory outputs
           ports:
             - containerPort: 8080
           resources:
@@ -30,9 +30,3 @@ spec:
             limits:
               cpu: "2"
               memory: "4Gi"
-          volumeMounts:
-            - name: output-volume
-              mountPath: /app/outputs
-      volumes:
-        - name: output-volume
-          emptyDir: {}
