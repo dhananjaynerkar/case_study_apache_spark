@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+.venv*/
+env/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local datasets are not committed to GitHub.
+data/*.csv
+!data/README.md
+
+# Spark and local runtime
+spark-warehouse/
+metastore_db/
+derby.log
+*.log
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large/generated local caches
+outputs/ipython/
+outputs/matplotlib_cache/
+outputs/student_features_parquet/
+
+# Keep useful output CSV/JSON files tracked if needed for submission
+!outputs/model_metrics.json
+!outputs/sample_predictions.csv
+!outputs/student_features.csv

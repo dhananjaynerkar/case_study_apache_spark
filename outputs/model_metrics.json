@@ -1,0 +1,7 @@
+{
+  "model": "Spark ML Logistic Regression",
+  "target": "pass_label",
+  "auc": 0.9706097899274218,
+  "accuracy": 0.9142137572800252,
+  "f1": 0.9142484488670111
+}

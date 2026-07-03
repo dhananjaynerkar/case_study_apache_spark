@@ -1,0 +1,41 @@
+name: Smart Education Analytics CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  validate-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check project structure and metrics
+        run: |
+          python src/health_check.py --skip-data
+
+      - name: Validate Kubernetes YAML files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for path in [Path("k8s/deployment.yaml"), Path("k8s/service.yaml")]:
+              text = path.read_text(encoding="utf-8")
+              if "apiVersion:" not in text or "kind:" not in text:
+                  raise SystemExit(f"Invalid Kubernetes manifest: {path}")
+          print("Kubernetes manifest check passed.")
+          PY

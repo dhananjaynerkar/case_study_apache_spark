@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-education-analytics
+  labels:
+    app: smart-education-analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smart-education-analytics
+  template:
+    metadata:
+      labels:
+        app: smart-education-analytics
+    spec:
+      containers:
+        - name: smart-education-analytics
+          image: smart-education-analytics:latest
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - python src/run_notebook.py && python -m http.server 8080 --directory outputs
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          volumeMounts:
+            - name: output-volume
+              mountPath: /app/outputs
+      volumes:
+        - name: output-volume
+          emptyDir: {}

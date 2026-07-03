@@ -1,0 +1,13 @@
+.git
+.agents
+.venv
+.venv310
+__pycache__
+*.pyc
+.ipynb_checkpoints
+data/*.csv
+!data/README.md
+outputs/ipython
+outputs/matplotlib_cache
+outputs/student_features_parquet
+screenshots
