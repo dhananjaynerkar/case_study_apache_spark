@@ -75,7 +75,15 @@ Note: `.venv310/` is the local environment used to run this project. It is usefu
 
 ## Data Source and Data Loading
 
-The data was already available locally and was organized into the project `data/` folder. No external dataset download was used. Dataset CSV files are intentionally ignored by Git because they are local input data and `studentVle.csv` is very large.
+The data was already available locally and was organized into the project `data/` folder. The provided files match the Open University Learning Analytics Dataset (OULAD).
+
+Dataset source link:
+
+```text
+https://figshare.com/articles/dataset/OULAD_Open_University_Learning_Analytics_Dataset/5081998?file=8606371
+```
+
+Dataset CSV files are intentionally ignored by Git because they are local input data and `studentVle.csv` is very large.
 
 The notebook loads these CSV files using Spark:
 

@@ -38,3 +38,7 @@ outputs/student_features_parquet/
 !outputs/model_metrics.json
 !outputs/sample_predictions.csv
 !outputs/student_features.csv
+
+# Local zip package for manual upload
+submit/
+submit.zip

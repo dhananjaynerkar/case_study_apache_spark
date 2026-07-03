@@ -62,7 +62,13 @@ case_study/
 
 ## Dataset Notes
 
-The provided data matches an education analytics dataset with course, student, assessment, registration, and VLE activity tables.
+The provided data matches the Open University Learning Analytics Dataset (OULAD), with course, student, assessment, registration, and VLE activity tables.
+
+Dataset source link:
+
+```text
+https://figshare.com/articles/dataset/OULAD_Open_University_Learning_Analytics_Dataset/5081998?file=8606371
+```
 
 Dataset CSV files are intentionally ignored by Git because they are local input data and `studentVle.csv` is too large for normal GitHub upload. Keep the CSV files in `data/` when running locally.
 
