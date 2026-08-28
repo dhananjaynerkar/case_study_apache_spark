@@ -60,6 +60,27 @@ case_study/
 |-- README.md
 ```
 
+
+
+## Architecture
+
+~~~mermaid
+flowchart LR
+  Data[OULAD CSV inputs] --> Load[Spark load and schema checks]
+  Load --> RDD[RDD transformations]
+  Load --> DF[DataFrame joins and aggregations]
+  DF --> SQL[Spark SQL analysis]
+  DF --> Features[Feature engineering]
+  Features --> ML[Spark ML classifier]
+  ML --> Metrics[Committed metrics JSON]
+  Metrics --> Serve[Docker and Kubernetes output service]
+  CI[GitHub Actions checks] --> Serve
+~~~
+
+The Kubernetes deployment serves generated outputs and a health endpoint. It
+does not retrain the Spark model inside every pod and it is not evidence of a
+distributed production Spark cluster.
+
 ## Dataset Notes
 
 The provided data matches the Open University Learning Analytics Dataset (OULAD), with course, student, assessment, registration, and VLE activity tables.
@@ -127,6 +148,26 @@ Final model metrics:
 | AUC | 0.9706 |
 | Accuracy | 0.9142 |
 | F1 Score | 0.9142 |
+
+
+
+## Clean-checkout validation
+
+Run from a fresh clone after placing the authorized OULAD CSV inputs in data/:
+
+~~~powershell
+git clone https://github.com/dhananjaynerkar/case_study_apache_spark.git
+Set-Location case_study_apache_spark
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe src\run_notebook.py
+docker build -t smart-education-analytics:local .
+kubectl apply -f k8s\deployment.yaml
+kubectl apply -f k8s\service.yaml
+~~~
+
+The commands are a reproducibility path; a successful local run is not a
+production deployment claim.
 
 ## Docker
 
