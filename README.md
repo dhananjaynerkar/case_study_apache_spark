@@ -1,5 +1,10 @@
 # Smart Education Analytics and Student Performance Prediction
 
+## About
+
+A PySpark education-analytics case study using RDDs, DataFrames, Spark SQL, ETL feature preparation, and Spark ML classification over OULAD data. Docker and Kubernetes package the local workflow and serve generated outputs; this is not a distributed production Spark cluster.
+
+
 This project solves **Case Study 8: Smart Education Analytics and Student Performance Prediction System using Apache Spark**.
 
 The main solution is implemented and executed in:
