@@ -4,6 +4,10 @@
 
 A PySpark education-analytics case study using RDDs, DataFrames, Spark SQL, ETL feature preparation, and Spark ML classification over OULAD data. Docker and Kubernetes package the local workflow and serve generated outputs; this is not a distributed production Spark cluster.
 
+> **Status:** Academic case study with local Docker/Kubernetes packaging; not a production Spark cluster.  
+> **Stack:** PySpark · Spark SQL · Spark ML · Docker · Kubernetes  
+> **Proof:** ETL feature preparation, committed evaluation outputs, architecture diagram, notebook runner, and CI checks.
+
 
 This project solves **Case Study 8: Smart Education Analytics and Student Performance Prediction System using Apache Spark**.
 
